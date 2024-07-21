@@ -1,0 +1,42 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:to_dice/app/utils/theme/controller.dart';
+
+class MyButton extends GetView<ThemeController> {
+  const MyButton({
+    super.key,
+    this.text,
+    this.icon,
+    required this.onPressed,
+    this.useIcon = false,
+    this.width,
+  });
+  final String? text;
+  final Icon? icon;
+  final VoidCallback? onPressed;
+  final bool useIcon;
+  final double? width;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: onPressed,
+        child: Container(
+          width: width,
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+          decoration: BoxDecoration(
+            color: controller.isDarkMode.value
+                ? Colors.grey.shade900
+                : Colors.grey.shade300,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: useIcon
+              ? icon!
+              : Text(text!,
+                  style: TextStyle(
+                      color: controller.isDarkMode.value
+                          ? Colors.white
+                          : Colors.black)),
+        ));
+  }
+}
