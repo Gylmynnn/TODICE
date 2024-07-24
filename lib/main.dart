@@ -18,7 +18,7 @@ class ToDice extends GetView<ThemeController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => GetMaterialApp(
-          defaultTransition: Transition.rightToLeft,
+          defaultTransition: controller.getTransitionTheme(),
           theme: controller.getLightTheme(),
           darkTheme: controller.getDarkTheme(),
           themeMode: _theTheme(),

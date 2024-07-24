@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:to_dice/app/components/setting_tile.dart';
+import 'package:to_dice/app/data/models/settings_model.dart';
 import 'package:to_dice/app/modules/settings/controllers/settings_controller.dart';
 import 'package:to_dice/app/routes/app_pages.dart';
 import 'package:to_dice/app/utils/theme/controller.dart';
@@ -20,48 +22,22 @@ class SettingsView extends GetView<SettingController> {
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: Obx(() => Column(
-              children: [
-                ListTile(
-                  onTap: () => Get.toNamed(Routes.FLANGUAGE),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(6)),
-                  ),
-                  contentPadding:
-                      const EdgeInsets.symmetric(vertical: 6, horizontal: 24),
-                  tileColor: themeC.isDarkMode.value
-                      ? Colors.grey.shade900
-                      : Colors.grey.shade300,
-                  title: Text(
-                    'language'.tr,
-                    style: const TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                  trailing: const Icon(Icons.arrow_forward_sharp),
-                  leading: const Icon(Icons.language_sharp),
-                ),
-                const Gap(12),
-                ListTile(
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(6)),
-                  ),
-                  onTap: () => Get.toNamed(Routes.FFONT),
-                  contentPadding:
-                      const EdgeInsets.symmetric(vertical: 6, horizontal: 24),
-                  tileColor: themeC.isDarkMode.value
-                      ? Colors.grey.shade900
-                      : Colors.grey.shade300,
-                  title: const Text(
-                    'Font',
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                  trailing: const Icon(Icons.arrow_forward_sharp),
-                  leading: const Icon(Icons.font_download_outlined),
-                ),
-              ],
-            )),
+                children: RxList.generate(
+              controller.settingsMenuValue.length,
+              (index) {
+                final SettingsModel setting =
+                    controller.settingsMenuValue[index];
+                return Column(
+                  children: [
+                    SettingTile(
+                        leading: setting.leading,
+                        onTap: setting.onTap,
+                        title: setting.title.tr),
+                    const Gap(14)
+                  ],
+                );
+              },
+            ))),
       ),
     );
   }

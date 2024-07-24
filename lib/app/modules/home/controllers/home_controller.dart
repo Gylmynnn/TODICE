@@ -6,20 +6,19 @@ import 'package:to_dice/app/data/event/hive.dart';
 import 'package:to_dice/app/utils/snackbar/snackbar.dart';
 
 class HomeController extends GetxController {
-  RxList toDoList = [].obs;
-  RxList toDoSugesstion =
+  RxList<dynamic> toDoList = [].obs;
+  RxList<dynamic> filteredToDoList = [].obs;
+  RxList<String> toDoSugesstion =
       ['Do Homework ?', 'Go To Campus ?', 'Go Healing ?'].obs;
   late TextEditingController taskController;
-  RxString currentTime = ''.obs;
+  late TextEditingController searchController;
 
   @override
   void onInit() {
     super.onInit();
     taskController = TextEditingController();
-    // updateCurrentTime();
-    // Timer.periodic(const Duration(seconds: 1), (Timer t) {
-    //   updateCurrentTime();
-    // });
+    searchController = TextEditingController();
+    searchController.addListener(_filterTasks);
     if (HiveLStorage.loadBox("TODOLIST") == null) {
       createInitialData();
     } else {
@@ -30,17 +29,15 @@ class HomeController extends GetxController {
   @override
   void onClose() {
     taskController.dispose();
+    searchController.dispose();
     super.onClose();
   }
 
-  // reference our box
-  // final Box<dynamic> _myBox = HiveLStorage.refrenceBox();
-
-  // run this method if this is the 1st time ever opening this app
   void createInitialData() {
     toDoList.value = [
       ["Progress Let's Go", false],
     ];
+    filteredToDoList.value = toDoList;
   }
 
   void exitApp() {
@@ -51,14 +48,9 @@ class HomeController extends GetxController {
     }
   }
 
-  // void updateCurrentTime() {
-  //   final now = DateTime.now();
-  //   currentTime.value = DateFormat('HH:mm:ss').format(now);
-  // }
-
-  // load the data from database
   void loadData() {
     toDoList.value = HiveLStorage.loadBox("TODOLIST");
+    filteredToDoList.value = toDoList;
   }
 
   void accSugesstion(int index) {
@@ -71,22 +63,55 @@ class HomeController extends GetxController {
   }
 
   void checkBoxChanged(int index) {
-    toDoList[index][1] = !toDoList[index][1];
-    toDoList.refresh();
+    int realIndex = _getReallIndex(index);
+    toDoList[realIndex][1] = !toDoList[realIndex][1];
     updateDataBase();
+    _filterTasks();
   }
 
   void saveNewTask() {
-    toDoList.add([taskController.text, false]);
-    updateDataBase();
-    taskController.clear();
-    Get.back();
-    cSnackBar('notification'.tr, '${'successfully'.tr} , ${'task_added'.tr}',
-        snackPosition: SnackPosition.TOP);
+    if (taskController.text.isEmpty) {
+      cSnackBar('notification'.tr, 'Task Cant Empty',
+          snackPosition: SnackPosition.BOTTOM);
+    } else {
+      toDoList.add([taskController.text, false]);
+      updateDataBase();
+      taskController.clear();
+      Get.back();
+      cSnackBar('notification'.tr, '${'successfully'.tr} , ${'task_added'.tr}',
+          snackPosition: SnackPosition.TOP);
+      _filterTasks();
+    }
+  }
+
+  bool iconSearchText() {
+    if (searchController.text.isNotEmpty) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void _filterTasks() {
+    String query = searchController.text.toLowerCase();
+    if (query.isEmpty) {
+      filteredToDoList.value = toDoList;
+    } else {
+      filteredToDoList.value = toDoList.where((task) {
+        return task[0].toLowerCase().contains(query);
+      }).toList();
+    }
+  }
+
+  int _getReallIndex(int filteredIndex) {
+    final String taskName = filteredToDoList[filteredIndex][0];
+    return toDoList.indexWhere((todo) => todo[0] == taskName);
   }
 
   void deleteTask(int index) {
-    toDoList.removeAt(index);
+    int realIndex = _getReallIndex(index);
+    toDoList.removeAt(realIndex);
     updateDataBase();
+    _filterTasks();
   }
 }

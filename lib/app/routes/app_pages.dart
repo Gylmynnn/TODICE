@@ -5,6 +5,7 @@ import 'package:to_dice/app/modules/home/views/home_view.dart';
 import 'package:to_dice/app/modules/settings/bindings/settings_binding.dart';
 import 'package:to_dice/app/modules/settings/views/fragment/font_view.dart';
 import 'package:to_dice/app/modules/settings/views/fragment/language_view.dart';
+import 'package:to_dice/app/modules/settings/views/fragment/transition_view.dart';
 import 'package:to_dice/app/modules/settings/views/settings_view.dart';
 import 'package:to_dice/app/modules/splash/bindings/splash_binding.dart';
 import 'package:to_dice/app/modules/splash/views/splash_view.dart';
@@ -39,6 +40,11 @@ class AppPages {
     GetPage(
       name: _Paths.FFONT,
       page: () => const FFontView(),
+      binding: SettingBinding(),
+    ),
+    GetPage(
+      name: _Paths.FTANSITION,
+      page: () => const FTransitionView(),
       binding: SettingBinding(),
     ),
   ];

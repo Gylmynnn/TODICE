@@ -4,22 +4,58 @@ import 'package:to_dice/app/data/event/hive.dart';
 import 'package:to_dice/app/utils/theme/theme.dart';
 
 class ThemeController extends GetxController {
+  //observable variables
   RxBool isDarkMode = false.obs;
   RxBool isConfirm = false.obs;
   RxString selectedFont = ''.obs;
   RxString selectedLanguage = ''.obs;
+  RxString selectedTransition = ''.obs;
+
+  //Hive box key value Variables
+  String fontKey = 'selectedFont';
+  String langkey = 'selectedLanguage';
+  String transKey = 'selectedTransition';
+  String themeKey = 'isDarkMode';
 
   @override
   void onInit() {
     super.onInit();
-    selectedLanguage.value =
-        HiveLStorage.loadBox('selectedLanguage', defaultValue: 'en_US');
+    initTransitionValue();
+    initLangValue();
+    updateLocale();
+    initThemeModeValue();
+    initFontValue();
+    switchTheme();
+  }
+
+  bool initThemeModeValue() {
+    return isDarkMode.value =
+        HiveLStorage.loadBox(themeKey, defaultValue: false);
+  }
+
+  String initFontValue() {
+    return selectedFont.value =
+        HiveLStorage.loadBox(fontKey, defaultValue: 'Lato');
+  }
+
+  String initTransitionValue() {
+    return selectedTransition.value =
+        HiveLStorage.loadBox(transKey, defaultValue: 'LTR');
+  }
+
+  String initLangValue() {
+    return selectedLanguage.value =
+        HiveLStorage.loadBox(langkey, defaultValue: 'en_US');
+  }
+
+  Future<void> updateLocale() async {
     Get.updateLocale(Locale(selectedLanguage.value.split('_')[0],
         selectedLanguage.value.split('_')[1]));
-    isDarkMode.value = HiveLStorage.loadBox('isDarkMode', defaultValue: false);
-    selectedFont.value =
-        HiveLStorage.loadBox('selectedFont', defaultValue: 'Lato');
-    Get.changeThemeMode(isDarkMode.value ? ThemeMode.dark : ThemeMode.light);
+  }
+
+  void switchTheme() {
+    return Get.changeThemeMode(
+        isDarkMode.value ? ThemeMode.dark : ThemeMode.light);
   }
 
   void changeLanguage(String languageCode) {
@@ -30,27 +66,26 @@ class ThemeController extends GetxController {
 
   void toggleTheme() {
     isDarkMode.value = !isDarkMode.value;
-    HiveLStorage.updateBox('isDarkMode', isDarkMode.value);
-    Get.changeThemeMode(isDarkMode.value ? ThemeMode.dark : ThemeMode.light);
+    HiveLStorage.updateBox(themeKey, isDarkMode.value);
+    switchTheme();
   }
 
-  void changeFont(String font) {
-    selectedFont.value = font;
-  }
+  void changeFont(String font) => selectedFont.value = font;
 
-  void saveFont() {
-    HiveLStorage.updateBox('selectedFont', selectedFont.value);
-  }
+  void changeTrasition(String trans) => selectedTransition.value = trans;
 
-  void saveLanguage() {
-    HiveLStorage.updateBox('selectedLanguage', selectedLanguage.value);
-  }
+  void saveTransition() =>
+      HiveLStorage.updateBox(transKey, selectedTransition.value);
 
-  ThemeData getLightTheme() {
-    return ThemeUtils.getLightTheme(selectedFont.value);
-  }
+  void saveFont() => HiveLStorage.updateBox(fontKey, selectedFont.value);
 
-  ThemeData getDarkTheme() {
-    return ThemeUtils.getDarkTheme(selectedFont.value);
-  }
+  void saveLanguage() =>
+      HiveLStorage.updateBox(langkey, selectedLanguage.value);
+
+  Transition getTransitionTheme() =>
+      ThemeUtils.getDefaultTransition(selectedTransition.value);
+
+  ThemeData getLightTheme() => ThemeUtils.getLightTheme(selectedFont.value);
+
+  ThemeData getDarkTheme() => ThemeUtils.getDarkTheme(selectedFont.value);
 }

@@ -9,6 +9,7 @@ abstract class Routes {
   static const FLANGUAGE = _Paths.FLANGUAGE;
   static const FFONT = _Paths.FFONT;
   static const SPLASH = _Paths.SPLASH;
+  static const TRANSITION = _Paths.FTANSITION;
 }
 
 abstract class _Paths {
@@ -18,4 +19,5 @@ abstract class _Paths {
   static const SETTINGS = '/settings';
   static const FLANGUAGE = '$SETTINGS/language';
   static const FFONT = '$SETTINGS/font';
+  static const FTANSITION = '$SETTINGS/transition';
 }

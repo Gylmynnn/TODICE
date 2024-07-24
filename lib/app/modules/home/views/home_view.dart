@@ -17,6 +17,7 @@ class HomeView extends GetView<HomeController> {
     final themeC = Get.find<ThemeController>();
     void createNewTask() {
       Get.bottomSheet(
+          shape: const OutlineInputBorder(borderRadius: BorderRadius.zero),
           backgroundColor: themeC.isDarkMode.value
               ? Colors.grey.shade800
               : Colors.grey.shade200,
@@ -37,14 +38,22 @@ class HomeView extends GetView<HomeController> {
                 //   label: 'Search',
                 // ),
                 const Gap(6),
-                const Padding(
-                  padding: EdgeInsets.only(
+                Padding(
+                  padding: const EdgeInsets.only(
                     left: 25.0,
                     right: 25,
                   ),
                   child: MyTextField(
                     hintText: 'Search The Task... ',
-                    suffixIcon: Icon(Icons.search),
+                    suffixIcon: controller.iconSearchText()
+                        ? IconButton(
+                            onPressed: () {
+                              controller.searchController.clear();
+                            },
+                            icon: const Icon(Icons.close_rounded))
+                        : IconButton(
+                            onPressed: () {}, icon: const Icon(Icons.search)),
+                    fieldController: controller.searchController,
                   ),
                 ),
                 const Gap(20),
@@ -53,14 +62,15 @@ class HomeView extends GetView<HomeController> {
                 ),
                 const Gap(6),
                 Expanded(
-                    child: controller.toDoList.isNotEmpty
+                    child: controller.filteredToDoList.isNotEmpty
                         ? ListView.builder(
                             shrinkWrap: true,
-                            itemCount: controller.toDoList.length,
+                            itemCount: controller.filteredToDoList.length,
                             itemBuilder: (context, index) {
                               return ToDoTile(
-                                taskName: controller.toDoList[index][0],
-                                taskCompleted: controller.toDoList[index][1],
+                                taskName: controller.filteredToDoList[index][0],
+                                taskCompleted:
+                                    controller.filteredToDoList[index][1],
                                 onChanged: (value) =>
                                     controller.checkBoxChanged(index),
                                 deleteFunction: (context) =>

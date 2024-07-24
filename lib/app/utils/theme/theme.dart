@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ThemeUtils {
@@ -12,7 +13,6 @@ class ThemeUtils {
       ),
       brightness: Brightness.light,
       textTheme: _getTextTheme(font),
-      // Tambahkan properti tema lainnya sesuai kebutuhan
     );
   }
 
@@ -26,8 +26,26 @@ class ThemeUtils {
       ),
       brightness: Brightness.dark,
       textTheme: _getTextTheme(font),
-      // Tambahkan properti tema lainnya sesuai kebutuhan
     );
+  }
+
+  static Transition getDefaultTransition(String value) {
+    switch (value) {
+      case 'Fade':
+        return Transition.fade;
+      case 'Zoom':
+        return Transition.zoom;
+      case 'RightToLeft':
+        return Transition.rightToLeft;
+      case 'UpToDown':
+        return Transition.upToDown;
+      case 'DownToUp':
+        return Transition.downToUp;
+      case 'FadeIn':
+        return Transition.fadeIn;
+      default:
+        return Transition.leftToRight;
+    }
   }
 
   static TextTheme _getTextTheme(String font) {

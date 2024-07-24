@@ -3,19 +3,22 @@ import 'package:get/get.dart';
 import 'package:to_dice/app/utils/theme/controller.dart';
 
 class MyTextField extends GetView<ThemeController> {
-  const MyTextField(
-      {super.key,
-      this.fieldController,
-      required this.hintText,
-      this.suffixIcon});
+  const MyTextField({
+    super.key,
+    this.fieldController,
+    required this.hintText,
+    this.suffixIcon,
+  });
 
   final TextEditingController? fieldController;
   final String hintText;
-  final Icon? suffixIcon;
+  final IconButton? suffixIcon;
 
   @override
   Widget build(BuildContext context) {
     return Obx(() => TextField(
+          onTapOutside: (event) =>
+              FocusManager.instance.primaryFocus?.unfocus(),
           controller: fieldController,
           style: TextStyle(
               color: controller.isDarkMode.value ? Colors.white : Colors.black),

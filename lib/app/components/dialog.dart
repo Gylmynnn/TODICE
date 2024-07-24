@@ -98,7 +98,9 @@ class DialogBox extends GetView<ThemeController> {
                     padding: const EdgeInsets.only(right: 2),
                     child: MyButton(
                       useIcon: true,
-                      icon: const Icon(Icons.send_rounded),
+                      icon: const Icon(
+                        Icons.add,
+                      ),
                       onPressed: onSave,
                     ),
                   )
