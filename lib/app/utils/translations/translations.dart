@@ -21,7 +21,8 @@ class Messages extends Translations {
           'preview': 'Preview',
           'hallo_world': '< Hallo World />',
           'task_added': 'Added Task',
-          'transition': 'Transition'
+          'transition': 'Transition',
+          'add-task': 'ADD TASK',
         },
         'id_ID': {
           'title': 'Aplikasi',
@@ -41,7 +42,8 @@ class Messages extends Translations {
           'preview': 'Pratinjau',
           'hallo_world': '< Hallo Dunia />',
           'task_added': 'Tugas Ditambahkan',
-          'transition': 'Transisi'
+          'transition': 'Transisi',
+          'add-task': 'TAMBAH TUGAS',
         },
       };
 }

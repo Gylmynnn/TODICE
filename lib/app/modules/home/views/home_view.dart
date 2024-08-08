@@ -6,6 +6,7 @@ import 'package:to_dice/app/components/label.dart';
 import 'package:to_dice/app/components/text_field.dart';
 import 'package:to_dice/app/components/todo_tile.dart';
 import 'package:to_dice/app/routes/app_pages.dart';
+import 'package:to_dice/app/utils/notification/notification.dart';
 import 'package:to_dice/app/utils/theme/controller.dart';
 import '../controllers/home_controller.dart';
 
@@ -165,7 +166,7 @@ Drawer _buildDrawer(ThemeController themeC, HomeController controller) {
                       bottom: 10,
                       right: 10,
                       child: Text(
-                        'v1.0.0',
+                        "v${themeC.appVerison.value} + ${themeC.appBuildNumber.value}",
                         style: TextStyle(
                           fontSize: 16,
                           color: themeC.isDarkMode.value

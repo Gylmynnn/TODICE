@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:to_dice/app/data/event/hive.dart';
+import 'package:to_dice/app/utils/notification/notification.dart';
 import 'package:to_dice/app/utils/theme/theme.dart';
 
 class ThemeController extends GetxController {
@@ -10,6 +12,8 @@ class ThemeController extends GetxController {
   RxString selectedFont = ''.obs;
   RxString selectedLanguage = ''.obs;
   RxString selectedTransition = ''.obs;
+  RxString appVerison = ''.obs;
+  RxString appBuildNumber = ''.obs;
 
   //Hive box key value Variables
   String fontKey = 'selectedFont';
@@ -25,7 +29,9 @@ class ThemeController extends GetxController {
     updateLocale();
     initThemeModeValue();
     initFontValue();
+    getAppVersion();
     switchTheme();
+    NotificationUtils.initializeNotifications();
   }
 
   bool initThemeModeValue() {
@@ -46,6 +52,12 @@ class ThemeController extends GetxController {
   String initLangValue() {
     return selectedLanguage.value =
         HiveLStorage.loadBox(langkey, defaultValue: 'en_US');
+  }
+
+  Future<void> getAppVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    appVerison.value = packageInfo.version;
+    appBuildNumber.value = packageInfo.buildNumber;
   }
 
   Future<void> updateLocale() async {

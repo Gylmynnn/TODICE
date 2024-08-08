@@ -37,11 +37,11 @@ class DialogBox extends GetView<ThemeController> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 20),
+                          vertical: 10, horizontal: 2),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Add Task',
+                          Text('add-task'.tr,
                               style: TextStyle(
                                 fontSize: 20,
                                 color: controller.isDarkMode.value
@@ -74,10 +74,10 @@ class DialogBox extends GetView<ThemeController> {
                                               Text(homeC.toDoSugesstion[index]),
                                           onTap: () =>
                                               homeC.accSugesstion(index)),
-                                      const Divider(
-                                        endIndent: 24,
-                                        indent: 24,
-                                      ),
+                                      // const Divider(
+                                      //   endIndent: 24,
+                                      //   indent: 24,
+                                      // ),
                                     ],
                                   ));
                             })))

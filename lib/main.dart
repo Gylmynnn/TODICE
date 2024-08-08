@@ -6,6 +6,7 @@ import 'package:to_dice/app/utils/translations/translations.dart';
 import 'app/routes/app_pages.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await Hive.openBox('myBox');
   Get.lazyPut<ThemeController>(() => ThemeController());
