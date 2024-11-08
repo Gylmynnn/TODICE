@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:to_dice/app/components/text_field.dart';
-import 'package:to_dice/app/modules/home/controllers/home_controller.dart';
-import 'package:to_dice/app/utils/theme/controller.dart';
+import 'package:todice/app/components/text_field.dart';
+import 'package:todice/app/modules/home/controllers/home_controller.dart';
+import 'package:todice/app/utils/theme/controller.dart';
 import 'button.dart';
 
 class DialogBox extends GetView<ThemeController> {
@@ -36,8 +36,8 @@ class DialogBox extends GetView<ThemeController> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 2),
+                      padding: const EdgeInsets.only(
+                          top: 16, bottom: 10, right: 16, left: 24),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

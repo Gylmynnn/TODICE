@@ -1,11 +1,11 @@
-name: to_dice
+name: todice
 version: 1.0.0+1
 publish_to: none
 description: Simple To Do List App.
-environment: 
-  sdk: '>=3.4.4 <4.0.0'
+environment:
+  sdk: ">=3.4.4 <4.0.0"
 
-dependencies: 
+dependencies:
   cupertino_icons: ^1.0.6
   get: 4.6.6
   hive: 2.2.3
@@ -16,18 +16,23 @@ dependencies:
   gap: 3.0.1
   package_info_plus: 8.0.1
   flutter_local_notifications: 17.2.2
-  flutter: 
+  flutter:
     sdk: flutter
 
-dev_dependencies: 
+dev_dependencies:
   flutter_lints: 4.0.0
   hive_generator: any
   build_runner: any
-  flutter_test: 
+  flutter_launcher_icons: "^0.13.1"
+  flutter_test:
     sdk: flutter
 
-flutter: 
-  assets: 
+flutter_launcher_icons:
+  android: "launcher_icon"
+  image_path: "assets/logo-img.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+
+flutter:
+  assets:
     - assets/
   uses-material-design: true
-

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:to_dice/app/utils/theme/controller.dart';
+import 'package:todice/app/utils/theme/controller.dart';
 
 class ToDoTile extends GetView<ThemeController> {
   final String taskName;

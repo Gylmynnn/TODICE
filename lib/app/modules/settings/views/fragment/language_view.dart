@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:to_dice/app/modules/settings/controllers/settings_controller.dart';
-import 'package:to_dice/app/utils/snackbar/snackbar.dart';
-import 'package:to_dice/app/utils/theme/controller.dart';
+import 'package:todice/app/modules/settings/controllers/settings_controller.dart';
+import 'package:todice/app/utils/snackbar/snackbar.dart';
+import 'package:todice/app/utils/theme/controller.dart';
 
 class FLanguageView extends GetView<SettingController> {
   const FLanguageView({super.key});

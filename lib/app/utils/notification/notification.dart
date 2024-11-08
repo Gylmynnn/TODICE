@@ -1,9 +1,10 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 
 class NotificationUtils {
   static Future<void> initializeNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('@mipmap/launcher_icon');
     const InitializationSettings initializationSettings =
         InitializationSettings(android: initializationSettingsAndroid);
 
@@ -13,8 +14,8 @@ class NotificationUtils {
   static Future<void> showNotification() async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
-      'your_channel_id',
-      'ToDice',
+      'notif_id',
+      'notif',
       importance: Importance.high,
       priority: Priority.high,
       showWhen: false,
@@ -23,8 +24,8 @@ class NotificationUtils {
         NotificationDetails(android: androidPlatformChannelSpecifics);
     await FlutterLocalNotificationsPlugin().show(
       0,
-      'Title',
-      'This is the body of the notification',
+      'notification'.tr,
+      'notif-body'.tr,
       platformChannelSpecifics,
       payload: 'item x',
     );

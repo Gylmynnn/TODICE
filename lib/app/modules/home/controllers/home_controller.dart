@@ -2,16 +2,22 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:to_dice/app/data/event/hive.dart';
-import 'package:to_dice/app/utils/snackbar/snackbar.dart';
+import 'package:todice/app/data/event/hive.dart';
+import 'package:todice/app/utils/notification/notification.dart';
+import 'package:todice/app/utils/snackbar/snackbar.dart';
 
 class HomeController extends GetxController {
   RxList<dynamic> toDoList = [].obs;
   RxList<dynamic> filteredToDoList = [].obs;
   RxList<String> toDoSugesstion =
-      ['Do Homework ?', 'Go To Campus ?', 'Go Healing ?'].obs;
+      [_sugesstion1, _sugesstion2, _sugesstion3].obs;
   late TextEditingController taskController;
   late TextEditingController searchController;
+
+  final String todoBoxKey = 'TODOLIST';
+  static const String _sugesstion1 = 'Do Homework ?';
+  static const String _sugesstion2 = 'Go To Campus ?';
+  static const String _sugesstion3 = 'Go Healing ?';
 
   @override
   void onInit() {
@@ -19,7 +25,7 @@ class HomeController extends GetxController {
     taskController = TextEditingController();
     searchController = TextEditingController();
     searchController.addListener(_filterTasks);
-    if (HiveLStorage.loadBox("TODOLIST") == null) {
+    if (HiveLStorage.loadBox(todoBoxKey) == null) {
       createInitialData();
     } else {
       loadData();
@@ -38,6 +44,8 @@ class HomeController extends GetxController {
       ["Progress Let's Go", false],
     ];
     filteredToDoList.value = toDoList;
+    updateDataBase();
+    NotificationUtils.showNotification();
   }
 
   void exitApp() {
@@ -49,7 +57,7 @@ class HomeController extends GetxController {
   }
 
   void loadData() {
-    toDoList.value = HiveLStorage.loadBox("TODOLIST");
+    toDoList.value = HiveLStorage.loadBox(todoBoxKey);
     filteredToDoList.value = toDoList;
   }
 
@@ -59,7 +67,7 @@ class HomeController extends GetxController {
 
   // update the database
   void updateDataBase() {
-    HiveLStorage.updateBox("TODOLIST", toDoList.toList());
+    HiveLStorage.updateBox(todoBoxKey, toDoList.toList());
   }
 
   void checkBoxChanged(int index) {

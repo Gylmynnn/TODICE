@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:to_dice/app/modules/splash/controllers/splash_controller.dart';
-import 'package:to_dice/app/utils/theme/controller.dart';
+import 'package:todice/app/modules/splash/controllers/splash_controller.dart';
+import 'package:todice/app/utils/theme/controller.dart';
 
 class SplashView extends GetView<SplashController> {
   const SplashView({super.key});
@@ -44,36 +44,35 @@ class SplashView extends GetView<SplashController> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('ToDice',
+                    Obx(() => Text('v${themeC.appVerison.value}',
                         style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
                           color: themeC.isDarkMode.value
                               ? Colors.grey.shade300
                               : Colors.grey.shade900,
-                        )),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('by',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: themeC.isDarkMode.value
-                                  ? Colors.grey.shade300
-                                  : Colors.grey.shade900,
-                            )),
-                        const Gap(5),
-                        Text('Gylmyn',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: themeC.isDarkMode.value
-                                  ? Colors.grey.shade300
-                                  : Colors.grey.shade900,
-                            )),
-                      ],
-                    ),
+                        ))),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     Text('by',
+                    //         style: TextStyle(
+                    //           fontSize: 12,
+                    //           fontWeight: FontWeight.bold,
+                    //           color: themeC.isDarkMode.value
+                    //               ? Colors.grey.shade300
+                    //               : Colors.grey.shade900,
+                    //         )),
+                    //     const Gap(5),
+                    //     Text('Gylmyn',
+                    //         style: TextStyle(
+                    //           fontSize: 16,
+                    //           fontWeight: FontWeight.bold,
+                    //           color: themeC.isDarkMode.value
+                    //               ? Colors.grey.shade300
+                    //               : Colors.grey.shade900,
+                    //         )),
+                    //   ],
+                    // ),
                     const Gap(12)
                   ],
                 )

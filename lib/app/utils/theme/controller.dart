@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:to_dice/app/data/event/hive.dart';
-import 'package:to_dice/app/utils/notification/notification.dart';
-import 'package:to_dice/app/utils/theme/theme.dart';
+import 'package:todice/app/data/event/hive.dart';
+import 'package:todice/app/utils/notification/notification.dart';
+import 'package:todice/app/utils/theme/theme.dart';
 
 class ThemeController extends GetxController {
   //observable variables
-  RxBool isDarkMode = false.obs;
-  RxBool isConfirm = false.obs;
-  RxString selectedFont = ''.obs;
-  RxString selectedLanguage = ''.obs;
-  RxString selectedTransition = ''.obs;
-  RxString appVerison = ''.obs;
-  RxString appBuildNumber = ''.obs;
+  final RxBool isDarkMode = false.obs;
+  final RxBool isConfirm = false.obs;
+  final RxString selectedFont = ''.obs;
+  final RxString selectedLanguage = ''.obs;
+  final RxString selectedTransition = ''.obs;
+  final RxString appVerison = ''.obs;
+  final RxString appBuildNumber = ''.obs;
+  final RxString appName = ''.obs;
 
   //Hive box key value Variables
-  String fontKey = 'selectedFont';
-  String langkey = 'selectedLanguage';
-  String transKey = 'selectedTransition';
-  String themeKey = 'isDarkMode';
+  final String fontKey = 'selectedFont';
+  final langkey = 'selectedLanguage';
+  final transKey = 'selectedTransition';
+  final themeKey = 'isDarkMode';
 
   @override
   void onInit() {
@@ -34,23 +35,30 @@ class ThemeController extends GetxController {
     NotificationUtils.initializeNotifications();
   }
 
+  bool get getDarkMode => isDarkMode.value;
+  String get getSelectedFont => selectedFont.value;
+  String get getSelectedTrs => selectedTransition.value;
+  String get getSelectedLang => selectedLanguage.value;
+  set setDarkMode(bool value) => isDarkMode.value = value;
+  set setSelectedFont(String value) => selectedFont.value = value;
+  set setSelectedTrs(String value) => selectedTransition.value = value;
+  set setSelectedLang(String value) => selectedLanguage.value = value;
+
   bool initThemeModeValue() {
-    return isDarkMode.value =
-        HiveLStorage.loadBox(themeKey, defaultValue: false);
+    return setDarkMode = HiveLStorage.loadBox(themeKey, defaultValue: false);
   }
 
   String initFontValue() {
-    return selectedFont.value =
+    return setSelectedFont =
         HiveLStorage.loadBox(fontKey, defaultValue: 'Lato');
   }
 
   String initTransitionValue() {
-    return selectedTransition.value =
-        HiveLStorage.loadBox(transKey, defaultValue: 'LTR');
+    return setSelectedTrs = HiveLStorage.loadBox(transKey, defaultValue: 'LTR');
   }
 
   String initLangValue() {
-    return selectedLanguage.value =
+    return setSelectedLang =
         HiveLStorage.loadBox(langkey, defaultValue: 'en_US');
   }
 
@@ -58,46 +66,45 @@ class ThemeController extends GetxController {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     appVerison.value = packageInfo.version;
     appBuildNumber.value = packageInfo.buildNumber;
+    appName.value = packageInfo.appName;
   }
 
   Future<void> updateLocale() async {
-    Get.updateLocale(Locale(selectedLanguage.value.split('_')[0],
-        selectedLanguage.value.split('_')[1]));
+    Get.updateLocale(
+        Locale(getSelectedLang.split('_')[0], getSelectedLang.split('_')[1]));
   }
 
   void switchTheme() {
-    return Get.changeThemeMode(
-        isDarkMode.value ? ThemeMode.dark : ThemeMode.light);
+    return Get.changeThemeMode(getDarkMode ? ThemeMode.dark : ThemeMode.light);
   }
 
   void changeLanguage(String languageCode) {
-    selectedLanguage.value = languageCode;
+    setSelectedLang = languageCode;
     Get.updateLocale(
         Locale(languageCode.split('_')[0], languageCode.split('_')[1]));
   }
 
   void toggleTheme() {
-    isDarkMode.value = !isDarkMode.value;
-    HiveLStorage.updateBox(themeKey, isDarkMode.value);
+    setDarkMode = !getDarkMode;
+    HiveLStorage.updateBox(themeKey, getDarkMode);
     switchTheme();
+    isDarkMode.refresh();
   }
 
-  void changeFont(String font) => selectedFont.value = font;
+  void changeFont(String font) => setSelectedFont = font;
 
-  void changeTrasition(String trans) => selectedTransition.value = trans;
+  void changeTrasition(String trans) => setSelectedTrs = trans;
 
-  void saveTransition() =>
-      HiveLStorage.updateBox(transKey, selectedTransition.value);
+  void saveTransition() => HiveLStorage.updateBox(transKey, getSelectedTrs);
 
-  void saveFont() => HiveLStorage.updateBox(fontKey, selectedFont.value);
+  void saveFont() => HiveLStorage.updateBox(fontKey, getSelectedFont);
 
-  void saveLanguage() =>
-      HiveLStorage.updateBox(langkey, selectedLanguage.value);
+  void saveLanguage() => HiveLStorage.updateBox(langkey, getSelectedLang);
 
   Transition getTransitionTheme() =>
-      ThemeUtils.getDefaultTransition(selectedTransition.value);
+      ThemeUtils.getDefaultTransition(getSelectedTrs);
 
-  ThemeData getLightTheme() => ThemeUtils.getLightTheme(selectedFont.value);
+  ThemeData getLightTheme() => ThemeUtils.getLightTheme(getSelectedFont);
 
-  ThemeData getDarkTheme() => ThemeUtils.getDarkTheme(selectedFont.value);
+  ThemeData getDarkTheme() => ThemeUtils.getDarkTheme(getSelectedFont);
 }

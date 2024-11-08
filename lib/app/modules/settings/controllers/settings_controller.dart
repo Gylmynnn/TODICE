@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:to_dice/app/data/models/settings_model.dart';
-import 'package:to_dice/app/routes/app_pages.dart';
+import 'package:todice/app/data/models/settings_model.dart';
+import 'package:todice/app/routes/app_pages.dart';
 
 class SettingController extends GetxController {
   RxList<String> fontsValue = [
@@ -44,5 +44,9 @@ class SettingController extends GetxController {
         leading: const Icon(Icons.pages_rounded),
         title: "transition",
         onTap: () => Get.toNamed(Routes.TRANSITION)),
+    SettingsModel(
+        leading: const Icon(Icons.dark_mode),
+        title: "Theme Mode",
+        onTap: () => Get.toNamed(Routes.THEMEMODE)),
   ].obs;
 }

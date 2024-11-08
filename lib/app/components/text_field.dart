@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:to_dice/app/utils/theme/controller.dart';
+import 'package:todice/app/utils/theme/controller.dart';
 
 class MyTextField extends GetView<ThemeController> {
   const MyTextField({

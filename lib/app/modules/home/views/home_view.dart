@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:to_dice/app/components/dialog.dart';
-import 'package:to_dice/app/components/label.dart';
-import 'package:to_dice/app/components/text_field.dart';
-import 'package:to_dice/app/components/todo_tile.dart';
-import 'package:to_dice/app/routes/app_pages.dart';
-import 'package:to_dice/app/utils/notification/notification.dart';
-import 'package:to_dice/app/utils/theme/controller.dart';
+import 'package:todice/app/components/dialog.dart';
+import 'package:todice/app/components/label.dart';
+import 'package:todice/app/components/text_field.dart';
+import 'package:todice/app/components/todo_tile.dart';
+import 'package:todice/app/routes/app_pages.dart';
+import 'package:todice/app/utils/theme/controller.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -30,14 +29,12 @@ class HomeView extends GetView<HomeController> {
     }
 
     return Scaffold(
-        drawer: _buildDrawer(themeC, controller),
+        // drawer: _buildDrawer(themeC, controller),
+        endDrawer: _buildDrawer(themeC, controller),
         appBar: _buildAppBar(themeC),
         body: Obx(() => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // const MyLabel(
-                //   label: 'Search',
-                // ),
                 const Gap(6),
                 Padding(
                   padding: const EdgeInsets.only(
@@ -58,8 +55,8 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ),
                 const Gap(20),
-                const MyLabel(
-                  label: 'Task',
+                MyLabel(
+                  label: 'task'.tr,
                 ),
                 const Gap(6),
                 Expanded(
@@ -114,17 +111,25 @@ class HomeView extends GetView<HomeController> {
 
 AppBar _buildAppBar(ThemeController themeC) {
   return AppBar(
-    title: const Text('ToDice'),
-    centerTitle: true,
-    actions: [
-      IconButton(
-        icon: Obx(() =>
-            Icon(themeC.isDarkMode.value ? Icons.dark_mode : Icons.light_mode)),
-        onPressed: () {
-          themeC.toggleTheme();
-        },
-      ),
-    ],
+    title: Row(
+      children: [
+        Image.asset(
+          'assets/logo-img.png',
+          height: 42,
+        ),
+        const Text('TODICE'),
+      ],
+    ),
+    // centerTitle: true,
+    // actions: [
+    //   IconButton(
+    //     icon: Obx(() =>
+    //         Icon(themeC.isDarkMode.value ? Icons.dark_mode : Icons.light_mode)),
+    //     onPressed: () {
+    //       themeC.toggleTheme();
+    //     },
+    //   ),
+    // ],
   );
 }
 
@@ -135,48 +140,51 @@ Drawer _buildDrawer(ThemeController themeC, HomeController controller) {
     child: Obx(() => ListView(
           children: [
             const Gap(12),
-            Container(
-                height: 300,
-                margin: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  color: themeC.isDarkMode.value
-                      ? Colors.grey.shade900
-                      : Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(12),
-                  image: const DecorationImage(
-                      image: AssetImage('assets/logo-img.png'),
-                      fit: BoxFit.cover),
-                ),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      top: 10,
-                      left: 10,
-                      child: Text(
-                        'ToDice',
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: themeC.isDarkMode.value
-                              ? Colors.grey.shade300
-                              : Colors.grey.shade900,
+            GestureDetector(
+              onTap: () => Get.toNamed(Routes.ABOUT),
+              child: Container(
+                  height: 300,
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: BoxDecoration(
+                    color: themeC.isDarkMode.value
+                        ? Colors.grey.shade900
+                        : Colors.grey.shade300,
+                    borderRadius: BorderRadius.circular(12),
+                    image: const DecorationImage(
+                        image: AssetImage('assets/logo-img.png'),
+                        fit: BoxFit.cover),
+                  ),
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        top: 10,
+                        left: 10,
+                        child: Text(
+                          'TODICE',
+                          style: TextStyle(
+                            fontSize: 22,
+                            color: themeC.isDarkMode.value
+                                ? Colors.grey.shade300
+                                : Colors.grey.shade900,
+                          ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      bottom: 10,
-                      right: 10,
-                      child: Text(
-                        "v${themeC.appVerison.value} + ${themeC.appBuildNumber.value}",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: themeC.isDarkMode.value
-                              ? Colors.grey.shade300
-                              : Colors.grey.shade900,
+                      Positioned(
+                        bottom: 10,
+                        right: 10,
+                        child: Text(
+                          "v${themeC.appVerison.value} + ${themeC.appBuildNumber.value}",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: themeC.isDarkMode.value
+                                ? Colors.grey.shade300
+                                : Colors.grey.shade900,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                )),
+                    ],
+                  )),
+            ),
             const Gap(12),
             SizedBox(
               height: 160,
