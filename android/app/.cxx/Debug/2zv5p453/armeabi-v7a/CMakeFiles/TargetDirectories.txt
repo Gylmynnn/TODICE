@@ -1,0 +1,2 @@
+/home/ligichi/Documents/Project/Flutter/TODICE/android/app/.cxx/Debug/2zv5p453/armeabi-v7a/CMakeFiles/edit_cache.dir
+/home/ligichi/Documents/Project/Flutter/TODICE/android/app/.cxx/Debug/2zv5p453/armeabi-v7a/CMakeFiles/rebuild_cache.dir

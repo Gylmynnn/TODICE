@@ -17,19 +17,21 @@ class ToDice extends GetView<ThemeController> {
   const ToDice({super.key});
   @override
   Widget build(BuildContext context) {
-    return Obx(() => GetMaterialApp(
-          defaultTransition: controller.getTransitionTheme(), 
-          theme: controller.getLightTheme(),
-          debugShowCheckedModeBanner: false,
-          darkTheme: controller.getDarkTheme(),
-          themeMode: _theTheme(),
-          title: "TODICE",
-          translations: Messages(),
-          locale: _theLocale(),
-          fallbackLocale: const Locale('en', 'US'),
-          initialRoute: AppPages.INITIAL,
-          getPages: AppPages.routes,
-        ));
+    return Obx(
+      () => GetMaterialApp(
+        defaultTransition: controller.getTransitionTheme(),
+        theme: controller.getLightTheme(),
+        debugShowCheckedModeBanner: false,
+        darkTheme: controller.getDarkTheme(),
+        themeMode: _theTheme(),
+        title: "TODICE",
+        translations: Messages(),
+        locale: _theLocale(),
+        fallbackLocale: const Locale('en', 'US'),
+        initialRoute: AppPages.INITIAL,
+        getPages: AppPages.routes,
+      ),
+    );
   }
 
   ThemeMode _theTheme() {

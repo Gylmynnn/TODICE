@@ -1,0 +1,1 @@
+/home/ligichi/Documents/Project/Flutter/TODICE/build/app/intermediates/cxx/Debug/2zv5p453/obj/armeabi-v7a
